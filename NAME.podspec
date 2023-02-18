@@ -12,10 +12,10 @@ Pod::Spec.new do |s|
   s.name             = '${POD_NAME}'
   s.version          = '0.1.0'
   s.summary          = 'A short description of ${POD_NAME}.'
-  s.homepage         = 'https://phab.gotokeep.com/source/${POD_NAME}'
+  s.homepage         = 'https://xxxx/source/${POD_NAME}'
   s.license          = { type: 'MIT', file: 'LICENSE' }
   s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
-  s.source           = { git: 'ssh://git@phab.gotokeep.com/source/${POD_NAME}.git', tag: s.version.to_s }
+  s.source           = { git: 'ssh://git@xxxx/${POD_NAME}.git', tag: s.version.to_s }
 
   s.requires_arc = true
   s.ios.deployment_target = '12.0'
