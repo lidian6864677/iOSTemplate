@@ -1,0 +1,51 @@
+source "https://github.com/CocoaPods/Specs.git"
+
+use_modular_headers!
+inhibit_all_warnings!
+
+platform :ios, '11.0'
+
+target 'ExamplePod' do
+  pod '${POD_NAME}', :path => '../'
+
+  pod "LookinServer", "1.0.0", :configurations => ["Debug"]
+  
+end
+
+post_install do |installer|
+  installer.generated_projects.each do |project|
+      project.targets.each do |target|
+          if target.name.start_with?("KEP")
+               target.build_configurations.each do |config|
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'INSPOBETA=0'
+                  config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+                  
+                  if config.name == 'Debug'
+                      config.build_settings['WARNING_CFLAGS'] = [
+                              "-Werror",
+                              "-Wno-error=nullability-completeness",
+                              "-Wno-error=incomplete-umbrella",
+                              "-Wno-error=unused-result",
+                              "-Wno-error=missing-selector-name",
+                              "-Wno-error=nonnull",
+                              "-Wno-error=deprecated-declarations",
+                              "-Wno-error=sometimes-uninitialized",
+                              "-Wno-error=format",
+                              "-Wno-error=objc-missing-super-calls",
+                              "-Wno-error=unguarded-availability-new",
+                              "-Wno-error=#warnings",
+                              "-Wno-error=objc-designated-initializers",
+                              "-Wno-error=shorten-64-to-32",
+                              "-Wno-error=strict-prototypes",
+                              "-Wno-error=documentation",
+                              "-Wno-error=deprecated-implementations",
+                              "-Wno-error=implicit-retain-self",
+                              "-Wno-error=quoted-include-in-framework-header"
+                          ];
+                  end
+              end
+          end
+      end
+  end
+end
